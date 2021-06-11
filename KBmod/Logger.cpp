@@ -17,7 +17,10 @@ std::string Logger::GetPath() {
     TCHAR usernamed[UNLEN + 100];
     DWORD size = UNLEN + 100;
     GetUserName((TCHAR*)usernamed, &size);
-    char* username = (char*)usernamed;
+    char dst[DST_LEN];
+    ZeroMemory(&dst[0], DST_LEN);
+    WideCharToMultiByte(CP_ACP, 0, &usernamed[0], lstrlen(usernamed), &dst[0], DST_LEN, NULL, NULL);
+    char* username = (char*)dst;
     char* path1 = (char*)"C:\\Users\\";
     const char* path2 = "\\AppData\\Local\\Packages\\Microsoft.MinecraftUWP_8wekyb3d8bbwe\\RoamingState\\";
     std::string path = (std::string)path1 + (std::string)(char*)username + (std::string)path2;
