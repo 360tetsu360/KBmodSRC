@@ -1,12 +1,18 @@
 ﻿#include <Windows.h>
 #include <string>
-#include "Logger.h"
 #include <vector>
+
+#include "Logger.h"
+#include "Hooks.h"
+#include "framework.h"
 
 HMODULE hMod = 0;
 
-int Loaded() {
+void Command(TextHolder* cmd, bool* cancel) {
+}
 
+int Loaded() {
+    Hook::getHook()->Install();
     return 0;
 }
 

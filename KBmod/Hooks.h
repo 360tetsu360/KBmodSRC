@@ -1,7 +1,9 @@
 #pragma once
+#include <map>
+
 #include "MinHook.h"
 #include "Memory.h"
-#include <map>
+
 class Hook
 {
 	Hook();
