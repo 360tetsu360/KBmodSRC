@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "Mem.h"
 #include "Logger.h"
 #include "Hooks.h"
 #include "framework.h"
@@ -88,7 +89,28 @@ void Command(TextHolder* cmd, bool* cancel) {
                     cmd->setText(resul);
                 }
             }
+            if (args[0] == "delay") {
+                if (args.size() == 2) {//Minecraft.Windows.exe + 1A281D7
+                    uintptr_t Address = Mem::getMem()->BaseAddress + 0x1D4DAAB;
+                    int num = atoi(args[1].c_str());
+                    if (num <= 255) {
+                        byte newdelay = num;
+                        WriteProcessMemory(Mem::getMem()->hProcess, (BYTE*)Address, &newdelay, sizeof(newdelay), nullptr);
+                        std::string resul = std::string("/tellraw @s {\"rawtext\":[{\"text\":\"request --OK\"}]}");
+                        cmd->setText(resul);
+                    }
+                    else {
+                        std::string resul = std::string("/tellraw @s {\"rawtext\":[{\"text\":\"request failed\"}]}");
+                        cmd->setText(resul);
+                    }
+                }
+            }
+            else {
+                std::string resul = std::string("/tellraw @s {\"rawtext\":[{\"text\":\"README.md!!!!\"}]}");
+                cmd->setText(resul);
+            }
         }
+
     }
 }
 
